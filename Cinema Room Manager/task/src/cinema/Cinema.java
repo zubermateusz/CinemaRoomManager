@@ -1,13 +1,44 @@
 package cinema;
 
+import java.util.Scanner;
+
 public class Cinema {
 
     private static String[][] room = new String[7][8];
 
     public static void main(String[] args) {
         // Write your code here
-        setSeats();
-        showRoom();
+        //setSeats();  //zakomentowane do 2/5
+        //showRoom();  //zakomentowane do 2/5
+
+        int[] roomSize = askUserAboutSeats();
+        totalIncame(roomSize[0], roomSize[1]);
+    }
+
+    private static void totalIncame(int rzedy, int siedzeniaWRzedzie) {
+        int priceSmallRoom = 10;
+        int priceFrontSeatsBigRoom = 10;
+        int priceBeckSeatsBigRoom = 8;
+        int sum = 0;
+        if (rzedy * siedzeniaWRzedzie <= 60) {
+            sum = rzedy * siedzeniaWRzedzie * priceSmallRoom;
+        } else {
+            sum = (rzedy / 2 * siedzeniaWRzedzie * priceFrontSeatsBigRoom) +
+                    ((rzedy - (rzedy / 2)) * siedzeniaWRzedzie * priceBeckSeatsBigRoom);
+        }
+        System.out.println("Total income:\n$" + sum);
+    }
+
+    private static int[] askUserAboutSeats() {
+        int[] roomSize = new int[2];
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the number of rows:");
+        System.out.print("> "); // znacznik dla usera
+        roomSize[0] = scanner.nextInt(); //wczytanie ilosci rzedow
+        System.out.println("Enter the number of seats in each row:");
+        System.out.print("> "); // znacznik dla usera
+        roomSize[1] = scanner.nextInt(); // wczytanie ilosci miejsc w rzedzie
+        return roomSize;
     }
 
     private static void setSeats() {
