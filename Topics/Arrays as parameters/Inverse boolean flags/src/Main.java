@@ -6,7 +6,11 @@ public class Main {
     public static void inverseFlags(boolean[] flags) {
         // write your code here
         for (int i = 0; i < flags.length; i++) {
-            flags[i] = !flags[i];
+            if (flags[i]) {
+                flags[i] = false;
+            } else {
+                flags[i] = true;
+            }
         }
 
     }
