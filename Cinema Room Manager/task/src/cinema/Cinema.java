@@ -22,8 +22,8 @@ public class Cinema {
         setSeats(room);  // wypelnienie wszystkich siedzie 'S'
 
         //showRoom(room);  //wyswietlenie pustej sali
-
-        while (true) {
+        boolean flag = true;
+        while (flag) {
             // wyswietlenie menu
             System.out.println("1. Show the seats");
             System.out.println("2. Buy a ticket");
@@ -52,9 +52,10 @@ public class Cinema {
                     System.out.println("Percentage: " + soldTicketsPercentage(room) + "%");
                     System.out.println("Current income: $" + currentIncame(room));
                     System.out.println("Total income: $" + totalIncame(room));
+                    System.out.println();
                     break;
                 }
-                case 0 -> System.exit(0);
+                case 0 -> flag = false;
             }
         }
     }
