@@ -84,10 +84,10 @@ public class Cinema {
     }
 
     private static void setPrice(Seat[][] room) {
-        int rzedy = room.length;
-        int miejscaWRzedzie = room[0].length;
+        int row = room.length;
+        int seatsInRow = room[0].length;
 
-        if (rzedy * miejscaWRzedzie <= 60) {
+        if (row * seatsInRow <= 60) {
             for (int i = 0; i < room.length; i++) {
                 for (int j = 0; j < room[i].length; j++) {
                     room[i][j].cena = priceSmallRoom;
