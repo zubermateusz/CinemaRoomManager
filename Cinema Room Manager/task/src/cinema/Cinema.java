@@ -11,7 +11,6 @@ public class Cinema {
     private static class Seat {
         String zajete;
         int cena;
-
     }
 
 
@@ -31,12 +30,10 @@ public class Cinema {
             System.out.println("3. Statistics");
             System.out.println("0. Exit");
 
-
             Scanner scanner = new Scanner(System.in);
             System.out.print("> "); // znacznik dla usera
-            int menuPosition = scanner.nextInt();
 
-            switch (menuPosition) {
+            switch (scanner.nextInt()) {
                 case 1 -> {
                     showRoom(room);
                     break;
@@ -45,7 +42,7 @@ public class Cinema {
                     boolean goodSeatsChoice = false;
                     if (!goodSeatsChoice) {
                         int[] seat = askUserAboutSeat(room); // zapytanie ktore miejsce kupic
-                        bookASeat(seat, room);
+                        bookASeat(seat, room); //kupienie miejsca
                     }
                     break;
                 }
@@ -58,8 +55,7 @@ public class Cinema {
                     break;
                 }
                 case 0 -> {
-                    run = false;
-                    break;
+                    System.exit(0);
                 }
             }
         }
@@ -112,7 +108,7 @@ public class Cinema {
         Scanner scanner = new Scanner(System.in);
         boolean goodSeat = true;
         int[] seat = new int[2];
-        while (goodSeat) {
+        do {
             System.out.println("Enter a row number:");
             System.out.print("> "); // znacznik dla usera
             seat[0] = scanner.nextInt(); //wczytanie rzad miejsca
@@ -126,7 +122,7 @@ public class Cinema {
             } else {
                 goodSeat = true;
             }
-        }
+        } while (!goodSeat);
         return seat;
     }
 
