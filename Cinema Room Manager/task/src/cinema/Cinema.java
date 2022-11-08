@@ -45,7 +45,7 @@ public class Cinema {
                     boolean goodSeatsChoice = false;
                     if (!goodSeatsChoice) {
                         int[] seat = askUserAboutSeat(room); // zapytanie ktore miejsce kupic
-                        checkSeatIsFree(seat, room);
+                        bookASeat(seat, room);
                     }
                     break;
                 }
@@ -65,7 +65,7 @@ public class Cinema {
         }
     }
 
-    private static boolean checkSeatIsFree(int[] seat, Seat[][] room) {
+    private static boolean bookASeat(int[] seat, Seat[][] room) {
         boolean flag = false;
         if (room[seat[0] - 1][seat[1] - 1].zajete == "B") {
             System.out.println("That ticket has already been purchased!");
