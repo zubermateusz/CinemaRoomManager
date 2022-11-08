@@ -22,8 +22,8 @@ public class Cinema {
         setSeats(room);  // wypelnienie wszystkich siedzie 'S'
 
         //showRoom(room);  //wyswietlenie pustej sali
-        boolean run = true;
-        while (run) {
+
+        while (true) {
             // wyswietlenie menu
             System.out.println("1. Show the seats");
             System.out.println("2. Buy a ticket");
@@ -31,7 +31,7 @@ public class Cinema {
             System.out.println("0. Exit");
 
             Scanner scanner = new Scanner(System.in);
-            System.out.print("> "); // znacznik dla usera
+            //System.out.print("> "); // znacznik dla usera
 
 
             switch (scanner.nextInt()) {
@@ -54,9 +54,7 @@ public class Cinema {
                     System.out.println("Total income: $" + totalIncame(room));
                     break;
                 }
-                case 0 -> {
-                    System.exit(0);
-                }
+                case 0 -> System.exit(0);
             }
         }
     }
@@ -64,9 +62,9 @@ public class Cinema {
     private static int currentIncame(Seat[][] room) {
         int sum = 0;
         for (Seat[] seats : room) {
-            for (int j = 0; j < seats.length; j++) {
-                if (seats[j].zajete == "B") {
-                    sum += seats[j].cena;
+            for (Seat seat : seats) {
+                if (seat.zajete.equals("B")) {
+                    sum += seat.cena;
                 }
             }
         }
@@ -81,8 +79,8 @@ public class Cinema {
     private static int soldTickets(Seat[][] room) {
         int count = 0;
         for (Seat[] seats : room) {
-            for (int j = 0; j < seats.length; j++) {
-                if (seats[j].zajete == "B") {
+            for (Seat seat : seats) {
+                if (seat.zajete.equals("B")) {
                     count++;
                 }
             }
@@ -95,10 +93,9 @@ public class Cinema {
         do {
             int[] seat = askUserAboutSeat(room); // zapytanie ktore miejsce kupic
 
-            if (room[seat[0] - 1][seat[1] - 1].zajete == "B") {
+            if (room[seat[0] - 1][seat[1] - 1].zajete.equals("B")) {
                 System.out.println("That ticket has already been purchased!");
-                System.out.println("");
-                flag = false;
+                System.out.println();
             } else {
                 showPrice(seat, room); //wyswietlenie ceny miejsca
                 room[seat[0] - 1][seat[1] - 1].zajete = "B"; //przypisanie miejsca jako zajete
@@ -138,15 +135,15 @@ public class Cinema {
 
     private static int[] askUserAboutSeat(Seat[][] room) {
         Scanner scanner = new Scanner(System.in);
-        boolean goodSeat = true;
+        boolean goodSeat;
         int[] seat = new int[2];
         do {
             System.out.println(); // czysta linia
             System.out.println("Enter a row number:");
-            System.out.print("> "); // znacznik dla usera
+            //System.out.print("> "); // znacznik dla usera
             seat[0] = scanner.nextInt(); //wczytanie rzad miejsca
             System.out.println("Enter a seat number in that row:");
-            System.out.print("> "); // znacznik dla usera
+            //System.out.print("> "); // znacznik dla usera
             seat[1] = scanner.nextInt(); // wczytanie numeru miejsca
             System.out.println();
             if (seat[0] > room.length || seat[1] > room[0].length) {
@@ -162,8 +159,8 @@ public class Cinema {
     private static int totalIncame(Seat[][] room) {
         int sum = 0;
         for (Seat[] seats : room) {
-            for (int j = 0; j < seats.length; j++) {
-                sum += seats[j].cena;
+            for (Seat seat : seats) {
+                sum += seat.cena;
             }
         }
         return sum;
@@ -173,10 +170,10 @@ public class Cinema {
         int[] roomSize = new int[2];
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the number of rows:");
-        System.out.print("> "); // znacznik dla usera
+        //System.out.print("> "); // znacznik dla usera
         roomSize[0] = scanner.nextInt(); //wczytanie ilosci rzedow
         System.out.println("Enter the number of seats in each row:");
-        System.out.print("> "); // znacznik dla usera
+        //System.out.print("> "); // znacznik dla usera
         roomSize[1] = scanner.nextInt(); // wczytanie ilosci miejsc w rzedzie
         System.out.println();
         return roomSize;
