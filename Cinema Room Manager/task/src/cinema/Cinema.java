@@ -39,11 +39,7 @@ public class Cinema {
                     break;
                 }
                 case 2 -> {
-                    boolean goodSeatsChoice = false;
-                    if (!goodSeatsChoice) {
-                        int[] seat = askUserAboutSeat(room); // zapytanie ktore miejsce kupic
-                        bookASeat(seat, room); //kupienie miejsca
-                    }
+                    bookASeat(room); //kupienie miejsca
                     break;
                 }
 
@@ -61,18 +57,21 @@ public class Cinema {
         }
     }
 
-    private static boolean bookASeat(int[] seat, Seat[][] room) {
+    private static void bookASeat( Seat[][] room) {
         boolean flag = false;
-        if (room[seat[0] - 1][seat[1] - 1].zajete == "B") {
-            System.out.println("That ticket has already been purchased!");
-            flag = false;
-        } else {
-            showPrice(seat, room); //wyswietlenie ceny miejsca
-            System.out.println(); //czysta linia
-            room[seat[0] - 1][seat[1] - 1].zajete = "B"; //przypisanie miejsca jako zajete
-            flag = true;
-        }
-        return flag;
+        do {
+            int[] seat = askUserAboutSeat(room); // zapytanie ktore miejsce kupic
+
+            if (room[seat[0] - 1][seat[1] - 1].zajete == "B") {
+                System.out.println("That ticket has already been purchased!");
+                flag = false;
+            } else {
+                showPrice(seat, room); //wyswietlenie ceny miejsca
+                System.out.println(); //czysta linia
+                room[seat[0] - 1][seat[1] - 1].zajete = "B"; //przypisanie miejsca jako zajete
+                flag = true;
+            }
+        } while (!flag);
     }
 
     private static void showPrice(int[] seat, Seat[][] room) {
