@@ -71,12 +71,16 @@ public class Cinema {
             System.out.println("That ticket has already been purchased!");
             flag = false;
         } else {
-            System.out.println("Ticket price: $" + room[seat[0] - 1][seat[1] - 1].cena);
-            System.out.println();
-            room[seat[0] - 1][seat[1] - 1].zajete = "B";
+            showPrice(seat, room); //wyswietlenie ceny miejsca
+            System.out.println(); //czysta linia
+            room[seat[0] - 1][seat[1] - 1].zajete = "B"; //przypisanie miejsca jako zajete
             flag = true;
         }
         return flag;
+    }
+
+    private static void showPrice(int[] seat, Seat[][] room) {
+        System.out.println("Ticket price: $" + room[seat[0] - 1][seat[1] - 1].cena);
     }
 
     private static void setPrice(Seat[][] room) {
