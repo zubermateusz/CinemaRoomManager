@@ -28,6 +28,7 @@ public class Cinema {
             // wyswietlenie menu
             System.out.println("1. Show the seats");
             System.out.println("2. Buy a ticket");
+            System.out.println("3. Statistics");
             System.out.println("0. Exit");
 
 
@@ -41,8 +42,19 @@ public class Cinema {
                     break;
                 }
                 case 2 -> {
-                    int[] seat = askUserAboutSeat(); // zapytanie ktore miejsce kupic
-                    ticketPrice(seat, room);
+                    boolean goodSeatsChoice = false;
+                    if (!goodSeatsChoice) {
+                        int[] seat = askUserAboutSeat(room); // zapytanie ktore miejsce kupic
+                        checkSeatIsFree(seat, room);
+                    }
+                    break;
+                }
+
+                case 3 -> {
+                    System.out.println("Number of purchased tickets: 0");
+                    System.out.println("Percentage: 0.00%");
+                    System.out.println("Current income: $0");
+                    System.out.println("Total income: $360");
                     break;
                 }
                 case 0 -> {
@@ -53,10 +65,18 @@ public class Cinema {
         }
     }
 
-    private static void ticketPrice(int[] seat, Seat[][] room) {
-        System.out.println("Ticket price: $" + room[seat[0] - 1][seat[1] - 1].cena);
-        System.out.println();
-        room[seat[0] - 1][seat[1] - 1].zajete = "B";
+    private static boolean checkSeatIsFree(int[] seat, Seat[][] room) {
+        boolean flag = false;
+        if (room[seat[0] - 1][seat[1] - 1].zajete == "B") {
+            System.out.println("That ticket has already been purchased!");
+            flag = false;
+        } else {
+            System.out.println("Ticket price: $" + room[seat[0] - 1][seat[1] - 1].cena);
+            System.out.println();
+            room[seat[0] - 1][seat[1] - 1].zajete = "B";
+            flag = true;
+        }
+        return flag;
     }
 
     private static void setPrice(Seat[][] room) {
@@ -84,16 +104,25 @@ public class Cinema {
         }
     }
 
-    private static int[] askUserAboutSeat() {
-        int[] seat = new int[2];
+    private static int[] askUserAboutSeat(Seat[][] room) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter a row number:");
-        System.out.print("> "); // znacznik dla usera
-        seat[0] = scanner.nextInt(); //wczytanie rzad miejsca
-        System.out.println("Enter a seat number in that row:");
-        System.out.print("> "); // znacznik dla usera
-        seat[1] = scanner.nextInt(); // wczytanie numeru miejsca
-        System.out.println();
+        boolean goodSeat = true;
+        int[] seat = new int[2];
+        while (goodSeat) {
+            System.out.println("Enter a row number:");
+            System.out.print("> "); // znacznik dla usera
+            seat[0] = scanner.nextInt(); //wczytanie rzad miejsca
+            System.out.println("Enter a seat number in that row:");
+            System.out.print("> "); // znacznik dla usera
+            seat[1] = scanner.nextInt(); // wczytanie numeru miejsca
+            System.out.println();
+            if (seat[0] > room.length || seat[1] > room[0].length) {
+                System.out.println("Wrong input!");
+                goodSeat = false;
+            } else {
+                goodSeat = true;
+            }
+        }
         return seat;
     }
 
