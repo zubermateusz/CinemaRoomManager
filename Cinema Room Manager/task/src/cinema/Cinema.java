@@ -21,13 +21,36 @@ public class Cinema {
         int[] roomSize = askUserAboutRoom(); // zapytanie o wielkosc sali
         Seat[][] room = new Seat[roomSize[0]][roomSize[1]]; // ustawienie siedzen i wielkosci sali
         setSeats(room);  // wypelnienie wszystkich siedzie 'S'
-        setPrice(room); // ustawienie cen siedzen
-        showRoom(room);  //wyswietlenie pustej sali
 
-        int[] seat = askUserAboutSeat(); // zapytanie ktore miejsce kupic
-        ticketPrice(seat, room);
-        showRoom(room);
-        //totalIncame(room);
+        //showRoom(room);  //wyswietlenie pustej sali
+        boolean run = true;
+        while (run) {
+            // wyswietlenie menu
+            System.out.println("1. Show the seats");
+            System.out.println("2. Buy a ticket");
+            System.out.println("0. Exit");
+
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("> "); // znacznik dla usera
+            int menuPosition = scanner.nextInt();
+
+            switch (menuPosition) {
+                case 1 -> {
+                    showRoom(room);
+                    break;
+                }
+                case 2 -> {
+                    int[] seat = askUserAboutSeat(); // zapytanie ktore miejsce kupic
+                    ticketPrice(seat, room);
+                    break;
+                }
+                case 0 -> {
+                    run = false;
+                    break;
+                }
+            }
+        }
     }
 
     private static void ticketPrice(int[] seat, Seat[][] room) {
@@ -104,6 +127,7 @@ public class Cinema {
                 room[i][j].zajete = "S";
             }
         }
+        setPrice(room); // ustawienie cen siedzen
     }
 
     private static void showRoom(Seat[][] room) {
