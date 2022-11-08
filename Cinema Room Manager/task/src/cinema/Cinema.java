@@ -33,21 +33,25 @@ public class Cinema {
             Scanner scanner = new Scanner(System.in);
             System.out.print("> "); // znacznik dla usera
 
+
             switch (scanner.nextInt()) {
                 case 1 -> {
+                    System.out.println(); // czysta linia
                     showRoom(room);
                     break;
                 }
                 case 2 -> {
+                    System.out.println(); // czysta linia
                     bookASeat(room); //kupienie miejsca
                     break;
                 }
 
                 case 3 -> {
-                    System.out.println("Number of purchased tickets: 0");
-                    System.out.println("Percentage: 0.00%");
-                    System.out.println("Current income: $0");
-                    System.out.println("Total income: $360");
+                    System.out.println(); // czysta linia
+                    System.out.println("Number of purchased tickets: " + soldTickets(room));
+                    System.out.println("Percentage: " + soldTicketsPercentage(room) + "%");
+                    System.out.println("Current income: $" + currentIncame(room));
+                    System.out.println("Total income: $" + totalIncame(room));
                     break;
                 }
                 case 0 -> {
@@ -57,6 +61,35 @@ public class Cinema {
         }
     }
 
+    private static int currentIncame(Seat[][] room) {
+        int sum = 0;
+        for (Seat[] seats : room) {
+            for (int j = 0; j < seats.length; j++) {
+                if (seats[j].zajete == "B") {
+                    sum += seats[j].cena;
+                }
+            }
+        }
+        return sum;
+    }
+
+    private static String soldTicketsPercentage(Seat[][] room) {
+        double result = (double)soldTickets(room) / ((room.length) * (room[0].length)) * 100;
+        return (String.format("%.2f", result));
+    }
+
+    private static int soldTickets(Seat[][] room) {
+        int count = 0;
+        for (Seat[] seats : room) {
+            for (int j = 0; j < seats.length; j++) {
+                if (seats[j].zajete == "B") {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
     private static void bookASeat( Seat[][] room) {
         boolean flag = false;
         do {
@@ -64,10 +97,10 @@ public class Cinema {
 
             if (room[seat[0] - 1][seat[1] - 1].zajete == "B") {
                 System.out.println("That ticket has already been purchased!");
+                System.out.println("");
                 flag = false;
             } else {
                 showPrice(seat, room); //wyswietlenie ceny miejsca
-                System.out.println(); //czysta linia
                 room[seat[0] - 1][seat[1] - 1].zajete = "B"; //przypisanie miejsca jako zajete
                 flag = true;
             }
@@ -108,6 +141,7 @@ public class Cinema {
         boolean goodSeat = true;
         int[] seat = new int[2];
         do {
+            System.out.println(); // czysta linia
             System.out.println("Enter a row number:");
             System.out.print("> "); // znacznik dla usera
             seat[0] = scanner.nextInt(); //wczytanie rzad miejsca
@@ -125,14 +159,14 @@ public class Cinema {
         return seat;
     }
 
-    private static void totalIncame(Seat[][] room) {
+    private static int totalIncame(Seat[][] room) {
         int sum = 0;
-        for (int i = 0; i < room.length; i++) {
-            for (int j = 0; j < room[i].length; j++) {
-                sum += room[i][j].cena;
+        for (Seat[] seats : room) {
+            for (int j = 0; j < seats.length; j++) {
+                sum += seats[j].cena;
             }
         }
-        System.out.println("Total income:\n$" + sum);
+        return sum;
     }
 
     private static int[] askUserAboutRoom() {
